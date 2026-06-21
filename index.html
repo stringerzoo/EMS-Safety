@@ -93,6 +93,7 @@
     text-decoration: none;
   }
   .toc-bar a:hover { color: var(--navy); border-bottom-color: var(--amber); }
+  .toc-bar a.active { color: var(--navy); border-bottom-color: var(--amber); font-weight: 600; }
 
   /* ── Main content ── */
   .content {
@@ -163,7 +164,7 @@
   }
   .callout strong { font-weight: 600; }
 
-  /*  ── Data table ──  */
+  /* ── Data table ── */
   .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -737,6 +738,38 @@
   <p>Data current as of mid-2026. Helicopter rates: USHST/FAA 2020–2024. Road rates: NHTSA FARS 2023.</p>
   <p style="margin-top: 6px;">This page is intended as a plain-language reference for the claims made in the accompanying infographic. It is not a substitute for primary source review.</p>
 </footer>
+
+<script>
+  (function () {
+    var navLinks = document.querySelectorAll('.toc-bar a');
+    var sections = Array.from(navLinks).map(function (a) {
+      return document.querySelector(a.getAttribute('href'));
+    });
+
+    function onScroll() {
+      var scrollY = window.scrollY || window.pageYOffset;
+      var navHeight = document.querySelector('.toc-bar').offsetHeight;
+      var offset = navHeight + 24;
+      var current = sections[0];
+
+      sections.forEach(function (section) {
+        if (section && section.getBoundingClientRect().top + scrollY - offset <= scrollY) {
+          current = section;
+        }
+      });
+
+      navLinks.forEach(function (a) {
+        a.classList.remove('active');
+        if (current && a.getAttribute('href') === '#' + current.id) {
+          a.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
 
 </body>
 </html>
