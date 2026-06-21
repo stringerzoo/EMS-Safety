@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMS Helicopter Safety — Is It Really Safer Than Driving?</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1B2A4A;
+    --amber: #E8A030;
+    --blue: #185FA5;
+    --blue-light: #E6F1FB;
+    --blue-dark: #0C447C;
+    --red: #A32D2D;
+    --red-light: #FCEBEB;
+    --gray: #5F5E5A;
+    --gray-light: #F4F2ED;
+    --gray-mid: #D3D1C7;
+    --text: #2C2C2A;
+    --text-muted: #888780;
+    --border: #e0ddd6;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--gray-light);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--navy);
+    padding: 36px 0 30px;
+  }
+  .site-header-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .site-header .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 10px;
+  }
+  .site-header h1 {
+    color: var(--white);
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .site-header .subtitle {
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Nav ── */
+  .toc-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .toc-bar-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .toc-bar a {
+    display: block;
+    padding: 12px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray);
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    text-decoration: none;
+  }
+  .toc-bar a:hover { color: var(--navy); border-bottom-color: var(--amber); }
+
+  /* ── Main content ── */
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 60px;
+  }
+
+  .section {
+    margin-top: 48px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 20px 0 6px;
+  }
+
+  p { margin-bottom: 12px; color: var(--text); }
+  p:last-child { margin-bottom: 0; }
+
+  ul, ol {
+    margin: 10px 0 12px 18px;
+  }
+  li { margin-bottom: 6px; }
+
+  /* ── Callout boxes ── */
+  .callout {
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .callout-blue {
+    background: var(--blue-light);
+    border-left: 3px solid var(--blue);
+    color: var(--blue-dark);
+  }
+  .callout-amber {
+    background: #FEF6E7;
+    border-left: 3px solid var(--amber);
+    color: #633806;
+  }
+  .callout-gray {
+    background: var(--gray-light);
+    border: 1px solid var(--border);
+    color: var(--gray);
+  }
+  .callout strong { font-weight: 600; }
+
+  /* ── Data table ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+  .data-table th {
+    background: var(--navy);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  .data-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: var(--gray-light); }
+  .data-table .v-helo { color: var(--blue); font-weight: 600; }
+  .data-table .v-car  { color: var(--gray); font-weight: 600; }
+  .data-table .v-moto { color: var(--red); font-weight: 600; }
+
+  /* ── Stat cards ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-card .lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ── Source list ── */
+  .source-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .source-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .source-list li:last-child { border-bottom: none; }
+  .source-list .src-label {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+  }
+  .source-list .src-label.gov { background: #EAF3DE; color: #27500A; }
+  .source-list .src-label.industry { background: #FEF6E7; color: #633806; }
+  .source-list .src-label.academic { background: #FBEAF0; color: #72243E; }
+  .source-list p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── Assumption box ── */
+  .assumption {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .assumption .assum-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 4px;
+  }
+  .assumption strong { font-weight: 600; color: var(--text); }
+
+  /* ── Footer ── */
+  .site-footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    text-align: center;
+    padding: 20px 24px;
+    line-height: 1.6;
+  }
+  .site-footer a { color: rgba(255,255,255,0.7); }
+
+  /* ── Math block ── */
+  .math-block {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 14px 0;
+    overflow-x: auto;
+  }
+  .math-block .comment { color: #6c7086; }
+
+  /* ── Infographic download card ── */
+  .download-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-left: 4px solid var(--amber);
+    border-radius: 6px;
+    padding: 18px 20px;
+    margin: 24px 0 0;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .download-card:hover { background: rgba(255,255,255,0.14); text-decoration: none; }
+  .download-card .dl-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(232,160,48,0.2);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+  .download-card .dl-text { flex: 1; }
+  .download-card .dl-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+  .download-card .dl-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.4;
+  }
+  .download-card .dl-arrow {
+    font-size: 18px;
+    color: var(--amber);
+    flex-shrink: 0;
+  }
+  /* Inline (light background) variant */
+  .download-card-inline {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #FEF6E7;
+    border: 1px solid #FAC775;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin: 24px 0;
+    text-decoration: none;
+  }
+  .download-card-inline:hover { background: #FAEEDA; text-decoration: none; }
+  .download-card-inline .dl-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #633806;
+    margin-bottom: 2px;
+  }
+  .download-card-inline .dl-desc {
+    font-size: 12px;
+    color: #854F0B;
+    line-height: 1.4;
+  }
+  .download-card-inline .dl-arrow { font-size: 16px; color: var(--amber); flex-shrink: 0; }
+
+  @media (max-width: 600px) {
+    .site-header { padding: 24px 0 20px; }
+    .site-header h1 { font-size: 20px; }
+    .site-header .subtitle { font-size: 13px; }
+    .download-card { gap: 12px; padding: 14px; }
+    .download-card .dl-icon { width: 34px; height: 34px; font-size: 17px; }
+    .download-card .dl-title { font-size: 13px; }
+    .toc-bar-inner { gap: 0; padding: 0 8px; }
+    .toc-bar a { padding: 10px 9px; font-size: 11px; }
+    .content { padding: 0 16px 48px; }
+    .section { margin-top: 36px; }
+    h2 { font-size: 17px; }
+    .stat-row { grid-template-columns: 1fr; }
+    .stat-card { display: flex; align-items: center; gap: 12px; text-align: left; padding: 12px; }
+    .stat-card .num { font-size: 26px; flex-shrink: 0; margin-bottom: 0; }
+    .data-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; white-space: nowrap; }
+    .math-block { font-size: 12px; }
+    .assumption { font-size: 13px; }
+    .download-card-inline { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .download-card-inline .dl-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="eyebrow">EMS Helicopter Safety</div>
+    <h1>Is flying in an EMS helicopter really safer than driving?</h1>
+    <p class="subtitle">The short answer is yes — and the data back it up. This page explains the research, the numbers, and the reasoning behind that claim, with links to every primary source.</p>
+    <a href="ems_safety_infographic.html" class="download-card" target="_blank" rel="noopener">
+      <div class="dl-icon">📄</div>
+      <div class="dl-text">
+        <div class="dl-title">Download the summary infographic</div>
+        <div class="dl-desc" style="color: rgba(255,255,255,0.5);">A printable half-sheet overview of the key statistics — designed to be shared with patients.</div>
+      </div>
+      <div class="dl-arrow">↗</div>
+    </a>
+  </div>
+</header>
+
+<nav class="toc-bar" aria-label="Page sections">
+  <div class="toc-bar-inner">
+    <a href="#the-claim">Key findings</a>
+    <a href="#helicopter-data">Helicopter data</a>
+    <a href="#road-data">Road data</a>
+    <a href="#comparison">Comparison</a>
+    <a href="#assumptions">Assumptions</a>
+    <a href="#caveats">Caveats</a>
+    <a href="#why-safer">Why safer</a>
+    <a href="#sources">Sources</a>
+  </div>
+</nav>
+
+<main class="content">
+
+  <!-- KEY FINDINGS -->
+  <section class="section" id="the-claim">
+    <div class="section-label">Overview</div>
+    <h2>Key findings</h2>
+    <p>When you compare fatal accident rates per mile traveled — the most meaningful unit for evaluating transportation risk — an EMS helicopter is one of the safest ways to move between two points. The data come from two independent federal sources and point to the same conclusion:</p>
+    <ol>
+      <li>An EMS helicopter is approximately <strong>2× safer per mile</strong> than riding in a passenger car.</li>
+      <li>An EMS helicopter is approximately <strong>63× safer per mile</strong> than riding a motorcycle.</li>
+    </ol>
+    <p>The sections below explain where each number comes from, what assumptions were required to produce a fair comparison, and where the data have honest limitations. A printable summary of the key statistics is also available as a <a href="ems_safety_infographic.html" target="_blank" rel="noopener">half-sheet infographic</a>.</p>
+
+    <div class="callout callout-blue">
+      <strong>Why "per mile" and not "per trip" or "per hour"?</strong><br>
+      Per-mile is the most meaningful unit for comparing transportation modes because it normalizes for the fact that different vehicles travel at very different speeds. A helicopter covers roughly 130 miles in the same hour a car covers 35–65 miles on a typical commute. Per-mile comparison asks: for each mile of travel, how likely is a fatal outcome? This is the same unit used by NHTSA for all road vehicle comparisons, making it the most apples-to-apples metric available.
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="num" style="color: #185FA5;">~0.50</div>
+        <div class="lbl">EMS helicopter<br>fatalities per 100M miles</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="color: #5F5E5A;">1.13</div>
+        <div class="lbl">Passenger car<br>fatalities per 100M miles</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="color: #A32D2D;">31.39</div>
+        <div class="lbl">Motorcycle<br>fatalities per 100M miles</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HELICOPTER DATA -->
+  <section class="section" id="helicopter-data">
+    <div class="section-label">Section 1</div>
+    <h2>Helicopter safety data</h2>
+
+    <h3>Primary source: U.S. Helicopter Safety Team (USHST)</h3>
+    <p>The U.S. Helicopter Safety Team is a joint government-industry body comprising the FAA, helicopter manufacturers, operators, and safety organizations. It publishes annual fatal accident rates for all U.S. civil helicopter operations, derived from NTSB accident reports and FAA flight hour surveys.</p>
+
+    <p>The rate used in the infographic is the <strong>5-year average from 2020 through 2024: 0.65 fatal accidents per 100,000 flight hours.</strong> This is the most statistically stable figure available — single-year rates can fluctuate significantly given the small absolute number of accidents.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Fatal accidents</th>
+          <th>Rate (per 100K hrs)</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>2020</td><td>~19</td><td class="v-helo">0.79</td><td></td></tr>
+        <tr><td>2021</td><td>~18</td><td class="v-helo">~0.72</td><td></td></tr>
+        <tr><td>2022</td><td>~17</td><td class="v-helo">0.72</td><td></td></tr>
+        <tr><td>2023</td><td>17</td><td class="v-helo">~0.65</td><td></td></tr>
+        <tr><td>2024</td><td>13</td><td class="v-helo">0.44</td><td>25-year record low</td></tr>
+        <tr><td><strong>5-yr avg</strong></td><td></td><td class="v-helo"><strong>~0.65</strong></td><td>Used in infographic</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-amber">
+      <strong>Why use the 5-year average rather than the most recent year?</strong><br>
+      2024's rate of 0.44 is encouraging, but it reflects only 13 fatal accidents across the entire U.S. fleet — a small enough number that year-to-year statistical noise is significant. The 5-year average of 0.65 is a more conservative and defensible figure. It is also the basis on which USHST sets its published safety goals.
+    </div>
+
+    <h3>What these rates cover</h3>
+    <p>USHST rates cover all U.S. civil helicopter operations — agricultural, utility, tour, personal, and air medical. EMS-specific (Part 135 air medical) rates have historically tracked close to the fleet average. In 2024, the Part 135 rate was 0.46 per 100,000 hours, slightly above the Part 91 (private) rate of 0.34 — making the fleet-average figure a reasonable and slightly conservative proxy for EMS operations specifically.</p>
+
+    <h3>Converting flight hours to miles</h3>
+    <p>USHST publishes rates per flight hour. To compare to road vehicles (reported per mile), a cruise speed assumption is required. The Bell 407 — a representative single-engine turbine EMS helicopter — cruises at approximately 130 mph (113 knots) in still air. This is a well-established published performance figure.</p>
+
+    <div class="math-block">
+0.65 fatal accidents / 100,000 flight hours
+× 130 miles / hour
+= 0.65 fatal accidents / 13,000,000 miles
+
+<span class="comment">Scaled to per-100-million-miles:</span>
+0.65 × (100,000,000 / 13,000,000) = <strong>~0.50 fatal accidents per 100M miles</strong>
+    </div>
+
+    <p>Sensitivity to cruise speed assumption:</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Assumed cruise speed</th><th>Resulting rate (per 100M miles)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>100 mph</td><td class="v-helo">0.65</td></tr>
+        <tr><td>115 mph</td><td class="v-helo">0.57</td></tr>
+        <tr><td><strong>130 mph (Bell 407 cruise)</strong></td><td class="v-helo"><strong>~0.50</strong></td></tr>
+        <tr><td>140 mph</td><td class="v-helo">0.46</td></tr>
+      </tbody>
+    </table>
+    <p>Across the plausible range of cruise speeds for a light EMS helicopter, the per-mile rate remains well below the passenger car figure of 1.13 in every scenario.</p>
+  </section>
+
+  <!-- ROAD DATA -->
+  <section class="section" id="road-data">
+    <div class="section-label">Section 2</div>
+    <h2>Road vehicle safety data</h2>
+
+    <h3>Primary source: NHTSA Fatality Analysis Reporting System (FARS)</h3>
+    <p>The National Highway Traffic Safety Administration's FARS is a census — not a sample — of all fatal traffic crashes on U.S. public roads. It has been collected since 1975 and is the authoritative source for U.S. road fatality statistics. Vehicle miles traveled (VMT) figures come from the Federal Highway Administration (FHWA).</p>
+
+    <p>All road figures below are from the <a href="https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813732.pdf" target="_blank" rel="noopener">NHTSA Traffic Safety Facts 2023 Data: Motorcycles</a> publication.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Vehicle type</th>
+          <th>2023 fatalities</th>
+          <th>Rate per 100M VMT</th>
+          <th>vs. EMS helicopter</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>EMS helicopter</td>
+          <td>~8–9 (est.)</td>
+          <td class="v-helo">~0.50</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Passenger car occupant</td>
+          <td>~20,000+</td>
+          <td class="v-car">1.13</td>
+          <td>2.3× higher</td>
+        </tr>
+        <tr>
+          <td>Motorcyclist</td>
+          <td>6,335</td>
+          <td class="v-moto">31.39</td>
+          <td>63× higher</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Motorcycle data: additional context</h3>
+    <p>The motorcycle figure of 31.39 per 100M miles represents the average across all motorcycle types and riders. The risk is not uniform:</p>
+    <ul>
+      <li><strong>Supersport motorcycles</strong> (high-performance, track-derived) have a fatal rate roughly <strong>4× higher</strong> than cruisers or standard bikes, per IIHS research.</li>
+      <li><strong>Speeding</strong> was a factor in 36% of fatal motorcycle crashes in 2023, compared to 22% for passenger car drivers.</li>
+      <li><strong>Alcohol impairment</strong> was present in 26% of fatally injured motorcycle riders; 40% in single-vehicle crashes.</li>
+      <li><strong>Helmet use</strong> reduces fatality risk by approximately 37% (NHTSA estimate). In 2023, 35% of riders killed were not wearing helmets.</li>
+    </ul>
+    <p>These factors mean a responsible, experienced, helmeted rider on a standard motorcycle has meaningfully lower individual risk than the fleet average — but the fleet average is the appropriate figure for a general comparison.</p>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="section" id="comparison">
+    <div class="section-label">Section 3</div>
+    <h2>The comparison: per hour vs. per mile</h2>
+
+    <p>The two metrics tell meaningfully different stories, and both are valid depending on what question you're asking.</p>
+
+    <h3>Per hour of exposure</h3>
+    <p>This asks: while I am actively engaged in this activity, how dangerous is each hour? On this basis, the helicopter (0.65 per 100K hours) is roughly <strong>2–3× safer</strong> than a motorcycle (~1.19 per 100K hours, estimated). The motorcycle figure requires converting NHTSA's VMT data to hours using an assumed average riding speed of ~38 mph.</p>
+
+    <h3>Per mile traveled</h3>
+    <p>This asks: for each mile I need to cover, how dangerous is each transportation choice? Because a helicopter travels at ~130 mph versus a motorcycle's ~38 mph average, the helicopter covers roughly <strong>3.4× more distance per hour</strong>. This multiplies its safety advantage: the helicopter goes from 2–3× safer per hour to approximately <strong>63× safer per mile</strong> versus a motorcycle, and approximately <strong>2× safer per mile</strong> versus a passenger car.</p>
+
+    <div class="callout callout-gray">
+      The per-mile metric is the most meaningful for a patient considering "how risky is this transport?" because the relevant question is covering the distance to the hospital safely — not how many hours are spent in transit.
+    </div>
+  </section>
+
+  <!-- ASSUMPTIONS -->
+  <section class="section" id="assumptions">
+    <div class="section-label">Section 4</div>
+    <h2>Assumptions and extrapolations</h2>
+
+    <p>Two calculations in this comparison require assumptions not directly stated in the source data. Both are clearly flagged here.</p>
+
+    <div class="assumption">
+      <div class="assum-label">Assumption 1</div>
+      <strong>Helicopter cruise speed: ~130 mph</strong>
+      <p style="margin-top: 6px; color: #5F5E5A;">Required to convert the USHST's flight-hour rate to a per-mile rate. The Bell 407 — a common EMS platform — has a published cruise speed of approximately 113–120 knots (130–138 mph). We used 130 mph as a conservative round figure. This assumption has low sensitivity: even at 100 mph cruise, the helicopter's per-mile rate (~0.65) remains well below the passenger car rate (1.13).</p>
+    </div>
+
+    <div class="assumption">
+      <div class="assum-label">Assumption 2</div>
+      <strong>Motorcycle average speed: ~38 mph</strong>
+      <p style="margin-top: 6px; color: #5F5E5A;">Required to convert NHTSA's VMT-based motorcycle fatality rate to a per-hour rate for the time-exposure comparison. NHTSA does not publish motorcycle fatality rates per hour. The 38 mph figure reflects a blended average across urban stop-and-go, suburban, and highway riding — consistent with FHWA traffic speed data for motorcycles. This assumption only affects the per-hour comparison; the per-mile comparison uses NHTSA's published VMT figure directly and requires no speed assumption for motorcycles.</p>
+    </div>
+  </section>
+
+  <!-- CAVEATS -->
+  <section class="section" id="caveats">
+    <div class="section-label">Section 5</div>
+    <h2>Important caveats</h2>
+
+    <h3>Risk is not uniformly distributed across a flight</h3>
+    <p>The per-mile metric implicitly assumes risk is constant across all miles flown. In practice, helicopter risk is concentrated in specific phases of operation — particularly low-altitude maneuvering, approach to off-airport landing zones, and flight in poor visibility. Cruise at altitude (the majority of miles covered) is substantially safer than the terminal regime. This means the per-mile figure somewhat overstates how dangerous the "cruise" portion of a flight is, while understating risk during takeoff and landing.</p>
+
+    <h3>Fleet-average rates vs. individual operator rates</h3>
+    <p>USHST rates cover all U.S. civil helicopter operators. Safety performance varies by operator, with well-run Part 135 air medical programs — which have mandatory safety management systems, flight risk assessment tools, and weather minimums — performing at or better than the fleet average. Conversely, some segments of the civil fleet (agricultural operations, personal use) have higher rates.</p>
+
+    <h3>The motorcycle rate is a population average</h3>
+    <p>As noted above, the 31.39 figure covers all U.S. motorcyclists. An experienced, licensed, helmeted rider on a cruiser-style motorcycle in good conditions has meaningfully lower personal risk than this figure implies. The fleet average is appropriate for a general population comparison, not for assessing any individual rider's risk.</p>
+
+    <h3>Both datasets improve over time</h3>
+    <p>Helicopter safety has improved substantially over two decades; the 2024 rate of 0.44 may represent a new baseline rather than a statistical outlier. Using the 5-year average (0.65) is deliberately conservative. Similarly, motorcycle fatality rates have trended upward over the past decade, suggesting the 2023 figure may understate current risk.</p>
+  </section>
+
+  <!-- WHY SAFER -->
+  <section class="section" id="why-safer">
+    <div class="section-label">Section 6</div>
+    <h2>Why EMS helicopters are as safe as the data suggest</h2>
+
+    <p>The safety record of air medical helicopters reflects structural features of the operating environment that go beyond pilot skill alone.</p>
+
+    <h3>Three-crew operations</h3>
+    <p>A typical EMS helicopter carries a pilot, a flight nurse, and a flight paramedic. All three are trained to monitor flight conditions and are empowered — and expected — to raise safety concerns at any point. This distributed responsibility structure is distinct from solo driving and is one reason aviation safety culture has historically produced lower accident rates than road transport.</p>
+
+    <h3>Systematic safety management</h3>
+    <p>Part 135 air medical operators are federally required to operate formal Safety Management Systems (SMS) — structured programs for identifying, tracking, and addressing hazards before they result in accidents. Every incident, equipment concern, and near-miss is logged and reviewed. This proactive approach is qualitatively different from road transport, where safety data are collected only after crashes occur.</p>
+
+    <h3>Formal go/no-go decision-making</h3>
+    <p>Every EMS flight begins with a structured Flight Risk Assessment Tool (FRAT) evaluation — a scored checklist that quantifies weather, crew fatigue, mission complexity, and other factors. Flights that exceed risk thresholds are declined or delayed. Drivers have no equivalent formal process before a commute.</p>
+
+    <h3>Mandatory weather minimums</h3>
+    <p>Part 135 operations require pilots to maintain defined minimum visibility and ceiling thresholds. Flight into weather below minimums is prohibited — not merely inadvisable. NTSB data show that unintended flight into poor visibility (inadvertent instrument meteorological conditions) is one of the leading causes of fatal helicopter accidents, and weather minimums are specifically designed to prevent it.</p>
+
+    <h3>A sustained improvement trend</h3>
+    <p>The U.S. helicopter fatal accident rate has declined from approximately 1.27 per 100,000 flight hours in the early 2000s to 0.44 in 2024 — a reduction of more than 65% over two decades. This reflects ongoing investment in training, technology (terrain awareness systems, autopilots, stability augmentation), and safety culture. The trend is not accidental; it is the result of systematic, industry-wide effort.</p>
+  </section>
+
+  <!-- SOURCES -->
+  <section class="section" id="sources">
+    <div class="section-label">Section 7</div>
+    <h2>Primary sources</h2>
+
+    <a href="ems_safety_infographic.html" class="download-card-inline" target="_blank" rel="noopener">
+      <div style="flex:1;">
+        <div class="dl-title">Summary infographic</div>
+        <div class="dl-desc">A printable half-sheet overview of the key statistics — designed to be shared with patients or posted at a base.</div>
+      </div>
+      <div class="dl-arrow">↗</div>
+    </a>
+
+    <ul class="source-list">
+
+      <li>
+        <span class="src-label industry">Industry / Government</span><br>
+        <strong>U.S. Helicopter Safety Team (USHST) — Rotorcraft Accident Dashboard</strong><br>
+        <a href="https://ushst.org/reports/" target="_blank" rel="noopener">ushst.org/reports</a>
+        <p>Annual and cumulative fatal accident rate data for U.S. civil helicopter operations. Primary source for the 0.65 per 100K flight hours 5-year average and the 2024 record low of 0.44.</p>
+      </li>
+
+      <li>
+        <span class="src-label industry">Industry</span><br>
+        <strong>Vertical Aviation International — "The Safety Dividend" (2025)</strong><br>
+        <a href="https://verticalavi.org/magazine-articles/the-safety-dividend/" target="_blank" rel="noopener">verticalavi.org — The Safety Dividend</a>
+        <p>Summary of USHST data presented at VERTICON 2025, including Part 91 vs. Part 135 rate breakdown and 25-year trend context.</p>
+      </li>
+
+      <li>
+        <span class="src-label gov">Government</span><br>
+        <strong>NHTSA Traffic Safety Facts 2023: Motorcycles</strong><br>
+        <a href="https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813732.pdf" target="_blank" rel="noopener">crashstats.nhtsa.dot.gov — Report 813732 (PDF)</a>
+        <p>Source for the 31.39 motorcyclist fatalities per 100 million VMT figure and the 1.13 passenger car occupant rate. Published by NHTSA's National Center for Statistics and Analysis.</p>
+      </li>
+
+      <li>
+        <span class="src-label gov">Government</span><br>
+        <strong>NHTSA — Motorcycle Safety (Countermeasures That Work)</strong><br>
+        <a href="https://www.nhtsa.gov/book/countermeasures-that-work/motorcycle-safety/understanding-problem" target="_blank" rel="noopener">nhtsa.gov — Countermeasures That Work</a>
+        <p>Comprehensive summary of motorcycle crash causation, including speeding involvement by motorcycle type, alcohol factors, and demographic patterns in fatalities.</p>
+      </li>
+
+      <li>
+        <span class="src-label gov">Government</span><br>
+        <strong>NHTSA Traffic Safety Facts 2023: Speeding</strong><br>
+        <a href="https://crashstats.nhtsa.dot.gov/Api/Public/Publication/813721" target="_blank" rel="noopener">crashstats.nhtsa.dot.gov — Report 813721</a>
+        <p>Source for speeding involvement by vehicle type in fatal crashes (36% of motorcycle riders vs. 22% of passenger car drivers in 2023).</p>
+      </li>
+
+      <li>
+        <span class="src-label industry">Industry / Research</span><br>
+        <strong>Insurance Institute for Highway Safety (IIHS) — Motorcycles Research Area</strong><br>
+        <a href="https://www.iihs.org/research-areas/motorcycles" target="_blank" rel="noopener">iihs.org/research-areas/motorcycles</a>
+        <p>Source for motorcycle type fatality rate comparisons (supersport vs. cruiser/standard), ABS effectiveness data, and helmet law analysis.</p>
+      </li>
+
+      <li>
+        <span class="src-label industry">Industry / Research</span><br>
+        <strong>IIHS Fatality Facts 2023: Motorcycles and ATVs</strong><br>
+        <a href="https://www.iihs.org/research-areas/fatality-statistics/detail/motorcycles-and-atvs" target="_blank" rel="noopener">iihs.org — Fatality Facts 2023: Motorcycles</a>
+        <p>IIHS analysis of 2023 FARS data, including urban/rural distribution of fatalities, helmet use by motorcycle type, and seasonal patterns.</p>
+      </li>
+
+      <li>
+        <span class="src-label academic">Research</span><br>
+        <strong>Flight Safety Foundation — "Downward Trends" (helicopter accident phase-of-flight analysis)</strong><br>
+        <a href="https://flightsafety.org/asw-article/downward-trends/" target="_blank" rel="noopener">flightsafety.org — Downward Trends</a>
+        <p>Analysis of U.S. helicopter accidents 2001–2010 by phase of flight, showing maneuvering (30%), landing (16%), cruise (13%), and takeoff (12%) distributions.</p>
+      </li>
+
+      <li>
+        <span class="src-label academic">Research</span><br>
+        <strong>Air Medical Journal — "Analysis of Helicopter Air Ambulance Accidents 2010–2021"</strong><br>
+        <a href="https://www.airmedicaljournal.com/article/S1067-991X(24)00164-0/fulltext" target="_blank" rel="noopener">airmedicaljournal.com — HAA Accident Analysis</a>
+        <p>Peer-reviewed analysis of 83 HAA accidents, including phase-of-flight breakdown and statistically significant reduction in cruise-phase fatal accidents from 2010–2015 to 2016–2021.</p>
+      </li>
+
+      <li>
+        <span class="src-label academic">Research</span><br>
+        <strong>Ouellet, J.V. — "Motorcycle Crash Speed and Rider Injury Severity" (2013)</strong><br>
+        <a href="https://www.researchgate.net/profile/James-Ouellet/post/Does_anyone_know_about_a_specific_correlation_between_motorcycle_crash_parameters_eg_vehicle_impact_speed_and_injury_outcomes_for_the_riders/attachment/59d64bed79197b80779a5d92/AS:482324581228548@1492006549902/download/Ouellet+-+Speed+&+severity+-FINAL+-+2013-09-03+w+page+num.pdf" target="_blank" rel="noopener">ResearchGate — Ouellet 2013 (PDF)</a>
+        <p>Analysis of crash speed vs. injury severity across multiple large motorcycle accident datasets, finding median pre-crash speeds of 20 mph for non-fatal and 37 mph for fatal crashes.</p>
+      </li>
+
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Data current as of mid-2026. Helicopter rates: USHST/FAA 2020–2024. Road rates: NHTSA FARS 2023.</p>
+  <p style="margin-top: 6px;">This page is intended as a plain-language reference for the claims made in the accompanying infographic. It is not a substitute for primary source review.</p>
+</footer>
+
+</body>
+</html>
